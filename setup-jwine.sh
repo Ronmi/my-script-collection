@@ -232,6 +232,7 @@ function make_jwine()
 		echo "esac"
 	) > ${HOME}/bin/jwine
 	chmod a+rx ${HOME}/bin/jwine
+	${HOME}/bin/jwine initfont | uiprogress "設定wine在日文環境下使用的字型"
 }
 
 if [ "$1" == "jwine" ]; then
