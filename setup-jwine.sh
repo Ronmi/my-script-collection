@@ -5,7 +5,6 @@
 export x_title="wine環境與日文設定"
 
 # 測試目前使用的ui是qt base還是gtk base
-# 目前使用簡易的測試法：偵測是否使用kde的session manager
 
 if [ x"$KDE_FULL_SESSION" == x"true" ]; then
 	ui="kde"
@@ -190,6 +189,10 @@ function make_jwine()
 		echo "      echo \"\""
 		echo " 	    echo \"[HKEY_CURRENT_USER\\\\Software\\\\Wine\\\\Fonts\\\\Replacement]\""
 		echo "      echo \"\\\"Helv\\\"=\\\"IPAMonaGothic\\\"\""
+		echo "      echo \"\\\"Helvetica\\\"=\\\"IPAMonaGothic\\\"\""
+		echo "      echo \"\\\"Tms Rmn\\\"=\\\"IPAMonaGothic\\\"\""
+		echo "      echo \"\\\"Times\\\"=\\\"IPAMonaGothic\\\"\""
+		echo "      echo \"\\\"MS Sans\\\"=\\\"IPAMonaGothic\\\"\""
 		echo "      echo \"\\\"MS Sans Serif\\\"=\\\"IPAMonaGothic\\\"\""
 		echo "      echo \"\\\"MS Gothic\\\"=\\\"IPAMonaGothic\\\"\""
 		echo "      echo \"\\\"MS Mincho\\\"=\\\"IPAMonaMincho\\\"\""
@@ -205,6 +208,10 @@ function make_jwine()
 		echo "      echo \"\\\"MS Shell Dlg\\\"=\\\"IPAMonaGothic\\\"\""
 		echo "      echo \"\\\"MS Shell Dlg 2\\\"=\\\"IPAMonaGothic\\\"\""
 		echo "      echo \"\\\"Helv\\\"=\\\"IPAMonaGothic\\\"\""
+		echo "      echo \"\\\"Helvetica\\\"=\\\"IPAMonaGothic\\\"\""
+		echo "      echo \"\\\"Tms Rmn\\\"=\\\"IPAMonaGothic\\\"\""
+		echo "      echo \"\\\"Times\\\"=\\\"IPAMonaGothic\\\"\""
+		echo "      echo \"\\\"MS Sans\\\"=\\\"IPAMonaGothic\\\"\""
 		echo "      echo \"\\\"MS Sans Serif\\\"=\\\"IPAMonaGothic\\\"\""
 		echo "      echo \"\\\"MS Gothic\\\"=\\\"IPAMonaGothic\\\"\""
 		echo "      echo \"\\\"MS Mincho\\\"=\\\"IPAMonaMincho\\\"\""
