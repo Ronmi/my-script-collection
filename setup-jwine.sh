@@ -7,8 +7,7 @@ export x_title="wine環境與日文設定"
 # 測試目前使用的ui是qt base還是gtk base
 # 目前使用簡易的測試法：偵測是否使用kde的session manager
 
-ps x|grep ksmserver
-if [ $? -eq 0 ]; then
+if [ x"$KDE_FULL_SESSION" == x"true" ]; then
 	ui="kde"
 else
 	ui="gtk"
@@ -33,7 +32,7 @@ function uiprogress()
 		qdbus $ref Set "" "value" 2
 		qdbus $ref close
 	else
-		zenity --progress --title="${x_title}" --test="$1" --auto-close \
+		zenity --progress --title="${x_title}" --text="$1" --auto-close \
 			--pulsate --width=400
 	fi
 }
