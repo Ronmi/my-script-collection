@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# Usage: ppsdl [pps://uri]
+# 
+# This program has a helper c binary called ppsdl-helper,
+# which is used for converting url-escaped binary string to
+# original format.
+#
+# For easier usage, you may configure your firefox (or whatever
+# browser you like), setting ppsdl as pps protocol handler.
+#
+# visit http://www.gnu.org/licenses/gpl.html for license.
+
+if [ x"$1" == x ]
+then
+  uri=$(zenity --entry --title="請貼上PPS網址" --text="請貼上PPS網址" --width=500)
+else
+  uri="$1"
+fi
+
+ext=$(basename "$uri" | sed -E 's;.*\.;;')
+fn=$(basename "$uri" | sed -E "s;\.$ext\$;;" | ppsdl-helper)
+
+# test if gb2312
+gb=$(echo "$fn" | iconv -t utf8 -f gb2312 | sed 's; ;_;g')
+if [ $? -eq 0 ]
+then
+  opt1="gb2312 $gb"
+fi
+
+# test if big5
+b5=$(echo "$fn" | iconv -t utf8 -f big5 | sed 's; ;_;g')
+if [ $? -eq 0 ]
+then
+  opt2="big5 $b5"
+fi
+
+# test if utf8
+u8=$(echo "$fn" | iconv -t utf8 -f utf8 | sed 's; ;_;g')
+if [ $? -eq 0 ]
+then
+  opt3="utf8 $u8"
+fi
+
+
+ftype=$(zenity --width=500 --height=300 --list --radiolist --title="請選擇檔名" --text="請選擇檔名" --print-column=2 --column="" --column="檔名" $opt1 $opt2 $opt3 "custom" "自行手動輸入")
+
+echo $ftype
+
+if [ "$ftype" == "自行手動輸入" ]
+then
+  fname=$(zenity --width=500 --entry --title="請輸入檔名" --text="請輸入檔名" | sed 's; ;_;g')
+else
+  fname="$ftype"
+fi
+
+if [ x"$ftype" == x -o x"$fname" == x ]
+then
+  zenity --info --text="已取消"
+  exit 1
+fi
+
+#echo "$HOME/$fname.$ext"
+
+gst-launch ppssrc location=$uri ! filesink location=$HOME/$fname.$ext | zenity --progress --pulsate --auto-close --auto-kill --text="正在下載 $fname ..." --title="下載中" --width=500
+
